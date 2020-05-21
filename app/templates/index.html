@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=\ initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+    </head>
+    <body>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css') }}">
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
+        <title>The Map</title>
+        <h1 id="headMap">The map</h1>
+        <div id="mapID"></div>
+
+        <form action="" method="get" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <label for={{ form.minimal_latitude.id }}   style="position: fixed; top: 12%; left: 6%;">   {{ form.minimal_latitude.label }}</label><br>
+            <label for={{ form.maximal_latitude.id }}   style="position: fixed; top: 12%; left: 27%;">  {{ form.maximal_latitude.label }}</label><br>
+            <label for={{ form.minimal_longitude.id }}  style="position: fixed; top: 25%; left: 6%;">   {{ form.minimal_longitude.label }}</label><br>
+            <label for={{ form.maximal_longitude.id }}  style="position: fixed; top: 25%; left: 27%;">  {{ form.maximal_longitude.label }}</label><br>
+            <label for={{ form.date_from.id }}  style="position: fixed; top: 38%; left: 6%;">  {{ form.date_from.label }}</label><br>
+            <label for={{ form.date_to.id }}  style="position: fixed; top: 38%; left: 27%;">  {{ form.date_to.label }}</label><br>
+
+            <input type="text" id={{ form.minimal_latitude.id }}    style="position: fixed; top: 15%; left: 4%;" placeholder="0.0">
+            <input type="text" id={{ form.maximal_latitude.id }}    style="position: fixed; top: 15%; left: 25%;" placeholder="0.0">
+            <input type="text" id={{ form.minimal_longitude.id }}   style="position: fixed; top: 28%; left: 4%;" placeholder="0.0">
+            <input type="text" id={{ form.maximal_longitude.id }}   style="position: fixed; top: 28%; left: 25%;" placeholder="0.0">
+            <input type="date" id={{ form.date_from.id }}   style="position: fixed; top: 42%; left: 4%; size: 10%;">
+            <input type="date" id={{ form.date_to.id }}   style="position: fixed; top: 42%; left: 25%;">
+
+            <button type="submit" id={{ form.send_data.id }} style="position: fixed; top: 55%; left: 19%;"> {{ form.send_data.label }}</button>
+
+            <!-- <label for={{ form.maximal_latitude.id }} style="position: fixed; top: 12%; left: 25%;">
+                {{ form.maximal_latitude.label }}
+            </label>
+            <input type="text" value="" id={{ form.maximal_latitude.id }}>
+
+            <label for={{ form.minimal_longitude.id }} style="position: fixed; top: 30%; left: 6%;">
+                {{ form.minimal_longitude.label }}
+            </label>
+            <input type="text" value="" id={{ form.minimal_longitude.id }}>
+
+            <label for={{ form.maximal_longitude.id }} style="position: fixed; top: 30%; left: 25%;">
+                {{ form.maximal_longitude.label }}
+            </label>
+            <input type="text" value="" id={{ form.maximal_longitude.id }}> -->
+
+            <!-- {{ form.minimal_latitude.label }}<br>
+            {{ form.minimal_latitude(size=32) }}<br>
+
+            {{ form.maximal_latitude.label }}<br>
+            {{ form.maximal_latitude(size=32) }}<br>
+
+            {{ form.minimal_longitude.label }}<br>
+            {{ form.minimal_longitude(size=32) }}<br>
+
+            {{ form.maximal_longitude.label }}<br>
+            {{ form.maximal_longitude(size=32) }}<br>
+
+            {{ form.send_data() }}<br> -->
+
+        </form>
+
+        <!-- <form name="send" action="test.php">
+            <label for="minLat" style="position: fixed; top: 14%; left: 4%;">Minimal latitude</label><br/>
+            <input type="text" id="minLat" name="minimalLat" placeholder="0.0" style="position: fixed; top: 18%; left: 2%;"><br/>
+
+            <label for="maxLat" style="position: fixed; top: 14%; left: 24%;">Maximal latitude</label><br/>
+            <input type="text" id="maxLat" name="maximalLat" placeholder="0.0" style="position: fixed;top: 18%;left: 22%;"><br/>
+
+            <label for="minLon" style="position: fixed; top: 28%; left: 4%;">Minimal longtitude</label><br/>
+            <input type="text" id="minLon" name="minimalLon" placeholder="0.0" style="position: fixed; top: 32%;left: 2%;"><br/>
+                
+            <label for="maxLon" style="position: fixed; top: 28%;left: 24%;">Maximal longtitude</label><br/>
+            <input type="text" id="maxLon" name="maximalLon" placeholder="0.0" style="position: fixed; top: 32%;left: 22%;"><br/>
+                
+            <label for="fDate" style="position: fixed; top: 44%;left: 6%;">First date</label><br/>
+            <input type="date" id="firstDate" name="firstDate" placeholder="DD.MM.YYYY" style="position: fixed; top: 48%;left: 2%;height: 2.6%;width: 14.6%;"><br/>
+                
+            <label for="sDate" style="position: fixed; top: 44%;left: 26%;">Second date</label><br/>
+            <input type="date" id="secondDate" name="secondDate" placeholder="DD.MM.YYYY" style="position: fixed; top: 48%;left: 22%;height: 2.6%;width: 14.6%;"><br/>
+            
+            <button id="find" name="submit" type="submit" style="position: fixed; top: 60%;left: 9%;">Find</button><br> 
+        </form> -->
+        <script src="{{ url_for('static', filename='js/map_init.js') }}"></script>
+    </body>
+</html>
