@@ -1,6 +1,6 @@
 from app import db
 from app.models import Info
-from data.converter import convert
+from data.actions.converter import convert
 import os
 import time
 

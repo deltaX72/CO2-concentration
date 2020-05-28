@@ -5,7 +5,14 @@
         <meta name="viewport" content="width=\ initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie-edge" />
     </head>
-    <body>
+    <body onload="
+        document.getElementById('min_lat').value = ''
+        document.getElementById('max_lat').value = ''
+        document.getElementById('min_lon').value = ''
+        document.getElementById('max_lon').value = ''
+        document.getElementById('date_from').value = ''
+        document.getElementById('date_to').value = ''
+    ">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css') }}">
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -20,7 +27,7 @@
         <h1 id="headMap">The map</h1>
         <div id="mapID"></div>
 
-        <form action="" method="get" novalidate>
+        <form action="" method="GET" novalidate>
             {{ form.hidden_tag() }}
             
             <label for={{ form.minimal_latitude.id }}   style="position: fixed; top: 12%; left: 6%;">   {{ form.minimal_latitude.label }}</label><br>
@@ -37,60 +44,56 @@
             <input type="date" id={{ form.date_from.id }}   style="position: fixed; top: 42%; left: 4%; size: 10%;">
             <input type="date" id={{ form.date_to.id }}   style="position: fixed; top: 42%; left: 25%;">
 
-            <button type="submit" id={{ form.send_data.id }} style="position: fixed; top: 55%; left: 19%;"> {{ form.send_data.label }}</button>
-
-            <!-- <label for={{ form.maximal_latitude.id }} style="position: fixed; top: 12%; left: 25%;">
-                {{ form.maximal_latitude.label }}
-            </label>
-            <input type="text" value="" id={{ form.maximal_latitude.id }}>
-
-            <label for={{ form.minimal_longitude.id }} style="position: fixed; top: 30%; left: 6%;">
-                {{ form.minimal_longitude.label }}
-            </label>
-            <input type="text" value="" id={{ form.minimal_longitude.id }}>
-
-            <label for={{ form.maximal_longitude.id }} style="position: fixed; top: 30%; left: 25%;">
-                {{ form.maximal_longitude.label }}
-            </label>
-            <input type="text" value="" id={{ form.maximal_longitude.id }}> -->
-
-            <!-- {{ form.minimal_latitude.label }}<br>
-            {{ form.minimal_latitude(size=32) }}<br>
-
-            {{ form.maximal_latitude.label }}<br>
-            {{ form.maximal_latitude(size=32) }}<br>
-
-            {{ form.minimal_longitude.label }}<br>
-            {{ form.minimal_longitude(size=32) }}<br>
-
-            {{ form.maximal_longitude.label }}<br>
-            {{ form.maximal_longitude(size=32) }}<br>
-
-            {{ form.send_data() }}<br> -->
-
+            <button type="submit" class="button" name='button' id={{ form.send_data.id }} style="position: fixed; top: 55%; left: 19%;"> {{ form.send_data.label }}</button>
         </form>
-
-        <!-- <form name="send" action="test.php">
-            <label for="minLat" style="position: fixed; top: 14%; left: 4%;">Minimal latitude</label><br/>
-            <input type="text" id="minLat" name="minimalLat" placeholder="0.0" style="position: fixed; top: 18%; left: 2%;"><br/>
-
-            <label for="maxLat" style="position: fixed; top: 14%; left: 24%;">Maximal latitude</label><br/>
-            <input type="text" id="maxLat" name="maximalLat" placeholder="0.0" style="position: fixed;top: 18%;left: 22%;"><br/>
-
-            <label for="minLon" style="position: fixed; top: 28%; left: 4%;">Minimal longtitude</label><br/>
-            <input type="text" id="minLon" name="minimalLon" placeholder="0.0" style="position: fixed; top: 32%;left: 2%;"><br/>
-                
-            <label for="maxLon" style="position: fixed; top: 28%;left: 24%;">Maximal longtitude</label><br/>
-            <input type="text" id="maxLon" name="maximalLon" placeholder="0.0" style="position: fixed; top: 32%;left: 22%;"><br/>
-                
-            <label for="fDate" style="position: fixed; top: 44%;left: 6%;">First date</label><br/>
-            <input type="date" id="firstDate" name="firstDate" placeholder="DD.MM.YYYY" style="position: fixed; top: 48%;left: 2%;height: 2.6%;width: 14.6%;"><br/>
-                
-            <label for="sDate" style="position: fixed; top: 44%;left: 26%;">Second date</label><br/>
-            <input type="date" id="secondDate" name="secondDate" placeholder="DD.MM.YYYY" style="position: fixed; top: 48%;left: 22%;height: 2.6%;width: 14.6%;"><br/>
-            
-            <button id="find" name="submit" type="submit" style="position: fixed; top: 60%;left: 9%;">Find</button><br> 
-        </form> -->
         <script src="{{ url_for('static', filename='js/map_init.js') }}"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+            const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            const tiles = L.tileLayer(tileUrl, { attribution });
+            var mymap = L.map('mapID').setView([0, 0], 1).addLayer(tiles);
+
+            var markers = []
+
+            $(function() {
+                $(".button").click(function(){
+                    var dataString = 
+                        "minimal_latitude=" + $("input#min_lat").val() +
+                        "&maximal_latitude=" + $("input#max_lat").val() +
+                        "&minimal_longitude=" + $("input#min_lon").val() +
+                        "&maximal_longitude=" + $("input#max_lon").val() +
+                        "&date_from=" + $("input#date_from").val() +
+                        "&date_to=" + $("input#date_to").val()
+                    ;
+                    $.ajax({
+                        url: "/handle",
+                        type: "get",
+                        data: dataString,
+                        dataType: "json",
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            if (markers.length > 0) {
+                                var len = markers.length;
+                                for (var i = 0; i < len; i++) {
+                                    mymap.removeLayer(markers.pop())
+                                }
+                            }
+                            
+                            for (var i = 0; i < data.length; i++) {
+                                var marker = L.marker([data[i]['lat'], data[i]['lon']]);
+                                markers.push(marker);
+                                marker.addTo(mymap);
+                            }
+                            console.log(markers.length);
+                        },
+                        error: function(xhr) {
+                            alert('not stonks!');
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
     </body>
 </html>

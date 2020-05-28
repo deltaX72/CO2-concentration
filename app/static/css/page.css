@@ -1,3 +1,6 @@
+.background {
+    color: black;
+}
 #headMap {
     color: grey;
     text-align: center;
@@ -27,15 +30,16 @@ input[type=text], select {
     cursor: pointer;
 }
 
-/* #find.button[type=submit]:hover {
-    background-color: #45a049;
-} */
-
+/* 
+    слой для отображения карты
+*/
 div {
     border-radius: 2%;
     background-color: #f2f2f2;
 }
-
+/* 
+    
+*/
 #mapID {
     position: fixed;
     left: 48%;
