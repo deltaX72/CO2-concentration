@@ -6,12 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie-edge" />
     </head>
     <body onload="
-        document.getElementById('min_lat').value = ''
-        document.getElementById('max_lat').value = ''
-        document.getElementById('min_lon').value = ''
-        document.getElementById('max_lon').value = ''
-        document.getElementById('date_from').value = ''
-        document.getElementById('date_to').value = ''
+        document.getElementById('min_lat').value = '50'
+        document.getElementById('max_lat').value = '80'
+        document.getElementById('min_lon').value = '60'
+        document.getElementById('max_lon').value = '100'
+        document.getElementById('date_from').value = '2014-06-01'
+        document.getElementById('date_to').value = '2014-06-10'
     ">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css') }}">
 
@@ -54,7 +54,8 @@
             const tiles = L.tileLayer(tileUrl, { attribution });
             var mymap = L.map('mapID').setView([0, 0], 1).addLayer(tiles);
 
-            var markers = []
+            var markers = [];
+            var polygonsList = [];
 
             $(function() {
                 $(".button").click(function(){
@@ -73,19 +74,38 @@
                         dataType: "json",
                         success: function(response) {
                             var data = JSON.parse(response);
-                            if (markers.length > 0) {
-                                var len = markers.length;
+
+                            if (polygonsList.length > 0) {
+                                var len = polygonsList.length;
                                 for (var i = 0; i < len; i++) {
-                                    mymap.removeLayer(markers.pop())
+                                    mymap.removeLayer(polygonsList.pop());
                                 }
                             }
-                            
-                            for (var i = 0; i < data.length; i++) {
-                                var marker = L.marker([data[i]['lat'], data[i]['lon']]);
-                                markers.push(marker);
-                                marker.addTo(mymap);
+
+                            for (var i = 0; i < data[1].length; i++) {
+                                var list = [
+                                    [data[1][i][0]['lat'], [data[1][i][0]['lon']]],
+                                    [data[1][i][1]['lat'], [data[1][i][1]['lon']]],
+                                    [data[1][i][2]['lat'], [data[1][i][2]['lon']]]
+                                ]
+                                var polygon = L.polygon(list, {color: 'red'});
+                                polygonsList.push(polygon);
+                                polygon.addTo(mymap);
                             }
-                            console.log(markers.length);
+
+                            // if (markers.length > 0) {
+                            //     var len = markers.length;
+                            //     for (var i = 0; i < len; i++) {
+                            //         mymap.removeLayer(markers.pop())
+                            //     }
+                            // }
+                            
+                            // for (var i = 0; i < data[0].length; i++) {
+                            //     var marker = L.marker([data[0][i]['lat'], data[0][i]['lon']]);
+                            //     // markers.push(marker);
+                            //     // marker.addTo(mymap);
+                            // }
+                            console.log(polygonsList.length);
                         },
                         error: function(xhr) {
                             alert('not stonks!');

@@ -39,10 +39,53 @@ def convert_to_json(data):
     out = '['
     for d in data:
         out += '\n\t{"date": "' + d[1] + '", "time": "' + d[2] + '", "lat": "' + str(d[3]) + '", "lon": "' + str(d[4]) + '", "con": "' + str(d[5]) + '"},'
+        # out += ('\n\t{"date": "{}", "time": "{}", "lat": "{}", "lon": "{}", "con": "{}"},').format(d[1], d[2], str(d[3]), str(d[4]), str(d[5]))
     if len(out) != 1:
         out = out[:len(out) - 1] + '\n]'
     else:
         out += '\n\t\n]'
     return out
+
+def get_pair_of_coordinates(data):
+    out = []
+    for i in data:
+        out.append(tuple([i[3], i[4]]))
+    return out
+
+def convert_coords_to_json(triangles):
+    out = '\n['
+    for i in range(len(triangles)):
+        out += '\n\t['
+        for index in range(3):
+            out += '\n\t\t{"lat": "' + str(triangles[i][index][0]) + '", "lon": "' + str(triangles[i][index][1]) + '"},'
+        out = out[:len(out) - 1]
+        out += '\n\t],'
+        if i == len(triangles) - 1:
+            out = out[:len(out) - 1]
+    out += '\n]'
+
+    return out
+
+'''
+    [
+        [
+            {"lat": "1223", "lon": "243"},
+            {"lat": "34436", "lon": "2354"},
+            {"lat": "63635", "lon": "6432"}
+        ],
+        [
+            {"lat": "1223", "lon": "243"},
+            {"lat": "34436", "lon": "2354"},
+            {"lat": "63635", "lon": "6432"}
+        ],
+        [
+            {"lat": "1223", "lon": "243"},
+            {"lat": "34436", "lon": "2354"},
+            {"lat": "63635", "lon": "6432"}
+        ]
+    ]
+
+'''
+    
 
 # convert_to_json_in_file(os.getcwd() + '/data/data.json')

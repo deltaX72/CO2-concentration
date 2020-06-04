@@ -7,4 +7,4 @@ def convert(dirname):
             for line in file:
                 string = line.split()
                 data.append(string)
-    return data    
+    return data

@@ -3,8 +3,10 @@ from app import app
 from app.forms import InputDataForm
 import sqlite3
 import json
-from read_db import convert_to_json
+from read_db import convert_to_json, get_pair_of_coordinates, convert_coords_to_json
 import os
+from delaunay import delaunay
+import drawTriangles
 
 @app.route('/')
 @app.route('/index')
@@ -31,16 +33,25 @@ def handle():
     cur.execute(query_string)
 
     rows = cur.fetchall()
-    
-    # for r in rows:
-    #     print(r)
-    # print(len(rows))
 
-    response = convert_to_json(rows)
+    response = '[\n'
+    response += convert_to_json(rows)
+
+    lat_lon = get_pair_of_coordinates(rows)
+    result = delaunay(lat_lon)
+
+    response += ',' + convert_coords_to_json(result)
+    response += '\n]'
+
+    # for i in range(len(result)):
+    #     print(i)
+    #     print(result[i][0])
+    #     print(result[i][2])
+    #     print(result[i][1])
+    #     print()
 
     connection.close()
 
-    # return render_template('handle.html')
     return jsonify(response)
 
 if __name__ == '__main__':
