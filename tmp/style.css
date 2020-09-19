@@ -1,0 +1,67 @@
+/* Greetings
+.greetings {
+    color: rgb(228, 104, 22);
+    /* size: 10;
+    background-color: rgb(177, 69, 69);
+}
+
+.greetings_header {
+    color: #f4a064;
+}
+
+/* Buttons
+.button {
+    color: cyan;
+    border: 2px solid violet;
+}
+
+/* Body
+body {
+    background-image: url("image0008.jpg");
+    background-repeat: repeat-y;    
+    background-position: right top;
+    background-attachment: scroll;
+}*/
+
+
+.configs {
+    width: 35%;
+    height: 50%;
+    margin: 5% 5%;
+    border-radius: 5%;
+
+    background-color: #c0c0c0;
+    color: #806e48;
+}
+
+.config-header {
+    text-align: center;
+}
+
+/* Panel */
+.panel {
+    /* border-radius: 25%; */
+
+    color: #806e48;
+    /* background-color: #c0c0c0; */
+}
+
+.panel-data {
+    width: 50%;
+}
+
+.panel-name {
+    font-size: smaller;
+    
+    margin: 0 7%;
+}
+
+.panel-input {
+    border-radius: 10%;
+    margin-bottom: 10%;
+    margin-left: 5%;
+    width: 54%;
+    height: 20%;
+
+    text-align: 5%;
+}

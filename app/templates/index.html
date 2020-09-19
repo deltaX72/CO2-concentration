@@ -6,12 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie-edge" />
     </head>
     <body onload="
-        document.getElementById('min_lat').value = '50'
-        document.getElementById('max_lat').value = '80'
+        document.getElementById('min_lat').value = '40'
+        document.getElementById('max_lat').value = '70'
         document.getElementById('min_lon').value = '60'
-        document.getElementById('max_lon').value = '100'
+        document.getElementById('max_lon').value = '90'
         document.getElementById('date_from').value = '2014-06-01'
-        document.getElementById('date_to').value = '2014-06-10'
+        document.getElementById('date_to').value = '2014-06-30'
     ">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css') }}">
 
@@ -48,14 +48,39 @@
         </form>
         <script src="{{ url_for('static', filename='js/map_init.js') }}"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/Leaflet.idw-master/src/leaflet-idw.js') }}"></script>
+        <!-- <script src="{{ url_for('static', filename='js/Leaflet.heat-gh-pages/dist/leaflet-heat.js') }}"></script> -->
         <script type="text/javascript">
-            const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+            // const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
             const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const tiles = L.tileLayer(tileUrl, { attribution });
-            var mymap = L.map('mapID').setView([0, 0], 1).addLayer(tiles);
-
-            var markers = [];
-            var polygonsList = [];
+            const 
+                southWest = L.latLng(
+                    $("input#min_lat").val(), 60
+                        ), 
+                northEast = L.latLng(
+                    70, 90
+                        );
+            const bounds = L.latLngBounds(southWest, northEast)
+            const tiles = L.tileLayer(tileUrl, { 
+                reuseTiles: true,
+                preferCanvas: true,
+                bounds: bounds,
+                updateWhenZooming: false,
+                detectRetina: true,
+                minZoom: 2,
+                maxZoom: 15,
+                maxBounds: bounds,
+                attribution: 
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
+            });
+            var map = L.map('mapID', {zoomControl: true}).setView(bounds.getCenter(), 1).addLayer(tiles);
+            map.on('drag', () => {
+                map.panInsideBounds(bounds, {animate: false})
+            });
+            
+            // var markers = [];
+            // var trianglesList = [];
+            // var layers = [];
 
             $(function() {
                 $(".button").click(function(){
@@ -73,25 +98,120 @@
                         data: dataString,
                         dataType: "json",
                         success: function(response) {
-                            var data = JSON.parse(response);
-
-                            if (polygonsList.length > 0) {
-                                var len = polygonsList.length;
-                                for (var i = 0; i < len; i++) {
-                                    mymap.removeLayer(polygonsList.pop());
+                            var data = response;
+                            
+                            var tempList = []
+                            var minC = 380;
+                            console.log(data)
+                                                        
+                            for (var month in data['months']) {
+                                for (var index = 0; index < data['months'][month].length; index++) {
+                                    if (data['months'][month][index][5] < 380) {
+                                        tempList.push(
+                                            [data['months'][month][index][3], data['months'][month][index][4], 0]
+                                        );    
+                                    } else {
+                                        tempList.push(
+                                            [data['months'][month][index][3], data['months'][month][index][4], data['months'][month][index][5] - minC]
+                                        );
+                                    }
                                 }
                             }
 
-                            for (var i = 0; i < data[1].length; i++) {
-                                var list = [
-                                    [data[1][i][0]['lat'], [data[1][i][0]['lon']]],
-                                    [data[1][i][1]['lat'], [data[1][i][1]['lon']]],
-                                    [data[1][i][2]['lat'], [data[1][i][2]['lon']]]
-                                ]
-                                var polygon = L.polygon(list, {color: 'red'});
-                                polygonsList.push(polygon);
-                                polygon.addTo(mymap);
-                            }
+                            console.log(tempList)
+
+                            var heat = L.idwLayer(tempList, {
+                                opacity: 0.3,
+                                maxZoom: 5,
+                                cellSize: 8,
+                                exp: 7,
+                                max: 410 - minC,
+                                gradient: {
+                                    0.0: 'blue',
+                                    0.25: 'cyan',
+                                    0.5: 'lime',
+                                    0.75: 'yellow',
+                                    1: 'red'
+                                }
+                            }).addTo(map)
+                            
+                            // for (var i = 0; i < tempList.length; i++) {
+                            //     L.marker([tempList[i][0], tempList[i][1]]).addTo(map)
+                            // }
+                            // L.marker(tempList).addTo(map)
+
+                            // for (var i = 0; i < 30; i++) {
+                            //     console.log(data['points'][i])
+                            //     var idw = L.idwLayer([
+                            //         [data['points'][i][3], data['points'][i][4], data['points'][i][5] / 1000.0]
+                            //     ], {
+                            //         radius: 25, 
+                            //         max: 1.0,
+                            //         gradient: {
+                            //             0.4: 'blue',
+                            //             0.65: 'lime',
+                            //             1: 'red'
+                            //         }
+                            //     }).addTo(map);
+                            // }
+
+                            // layers = []
+
+                            // for (var i = 0; i < trianglesList.length; i++) {
+                            //     layers.push([])
+                            //     for (var k = 0; k < trianglesList[i].length; k++) {
+                            //         var idw = L.heatLayer([
+                            //             [trianglesList[i][k][0][0], trianglesList[i][k][0][1], trianglesList[i][k][0][2] / 5.0],
+                            //             [trianglesList[i][k][1][0], trianglesList[i][k][1][1], trianglesList[i][k][1][2] / 5.0],
+                            //             [trianglesList[i][k][2][0], trianglesList[i][k][2][1], trianglesList[i][k][2][2] / 5.0]
+                            //         ], {
+                            //             opacity: 0.1, 
+                            //             radius: 25, 
+                            //             max: 50.0,
+                            //             gradient: {
+                            //                 0.4: 'blue',
+                            //                 0.65: 'lime',
+                            //                 1: 'red'
+                            //             }
+                            //         });
+                            //         console.log(trianglesList[i][k])
+                            //         layers[i].push(idw)
+                            //         idw.addTo(map)
+                            //     }
+                            // }
+
+                            // for (var i = 0; i < trianglesList.length; i++) {
+                            //     layers.push([])
+                            //     for (var k = 0; k < trianglesList[i].length; k++) {
+                            //         var idw = L.idwLayer([
+                            //             [trianglesList[i][k][0][0], trianglesList[i][k][0][1], 20],
+                            //             [trianglesList[i][k][1][0], trianglesList[i][k][1][1], 25],
+                            //             [trianglesList[i][k][2][0], trianglesList[i][k][2][1], 30]
+                            //         ], {opacity: 0.1, cellSize: 10, exp: 4, max: 1200});
+                            //         console.log(trianglesList[i][k])
+                            //         layers[i].push(idw)
+                            //         idw.addTo(map)
+                            //     }
+                            // }
+
+                            // if (polygonsList.length > 0) {
+                            //     var len = polygonsList.length;
+                            //     for (var i = 0; i < len; i++) {
+                            //         mymap.removeLayer(polygonsList.pop());
+                            //     }
+                            // }
+
+                            // for (var i = 0; i < data[1].length; i++) {
+                            //     var list = [
+                            //         [data[1][i][0]['lat'], [data[1][i][0]['lon']]],
+                            //         [data[1][i][1]['lat'], [data[1][i][1]['lon']]],
+                            //         [data[1][i][2]['lat'], [data[1][i][2]['lon']]]
+                            //     ]
+                            //     var polygon = L.polygon(list, {color: 'red'});
+                            //     polygonsList.push(polygon);
+                            //     polygon.addTo(mymap);
+                            // }
+                            // console.log('polygons: ' + polygonsList.length);
 
                             // if (markers.length > 0) {
                             //     var len = markers.length;
@@ -102,10 +222,10 @@
                             
                             // for (var i = 0; i < data[0].length; i++) {
                             //     var marker = L.marker([data[0][i]['lat'], data[0][i]['lon']]);
-                            //     // markers.push(marker);
-                            //     // marker.addTo(mymap);
+                            //     markers.push(marker);
+                            //     marker.addTo(mymap);
                             // }
-                            console.log(polygonsList.length);
+                            // console.log('markers: ' + markers.length);
                         },
                         error: function(xhr) {
                             alert('not stonks!');

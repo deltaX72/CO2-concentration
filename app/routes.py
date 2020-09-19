@@ -3,10 +3,14 @@ from app import app
 from app.forms import InputDataForm
 import sqlite3
 import json
-from read_db import convert_to_json, get_pair_of_coordinates, convert_coords_to_json
+from converters import get_pair_of_coordinates
 import os
-from delaunay import delaunay
-import drawTriangles
+# from delaunay import delaunay
+
+dict_with_data = {
+    "points": [],
+    "months": {} # YYYY-MM
+}
 
 @app.route('/')
 @app.route('/index')
@@ -23,7 +27,7 @@ def handle():
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
 
-    connection = sqlite3.connect('app.db')
+    connection = sqlite3.connect('app1.db')
     print('Connected to SQLite!')
 
     cur = connection.cursor()
@@ -32,27 +36,49 @@ def handle():
         .format(date_from, date_to, minimal_latitude, maximal_latitude, minimal_longitude, maximal_longitude)
     cur.execute(query_string)
 
-    rows = cur.fetchall()
-
-    response = '[\n'
-    response += convert_to_json(rows)
-
-    lat_lon = get_pair_of_coordinates(rows)
-    result = delaunay(lat_lon)
-
-    response += ',' + convert_coords_to_json(result)
-    response += '\n]'
-
-    # for i in range(len(result)):
-    #     print(i)
-    #     print(result[i][0])
-    #     print(result[i][2])
-    #     print(result[i][1])
-    #     print()
-
+    dict_with_data['points'] = cur.fetchall()
     connection.close()
 
-    return jsonify(response)
+    # to json
+
+    for i in dict_with_data['points']:
+        line = i[1].split('-')
+        dict_with_data['months']['{}-{}'.format(line[0], line[1])] = []
+    # dict_with_data['months'] = sorted(dict_with_data['months'])
+
+    
+    for i in dict_with_data['points']:
+        line = i[1].split('-')
+        dict_with_data['months']['{}-{}'.format(line[0], line[1])].append(i)
+
+    # triangulation
+    # empty list 'lst'
+    lst = dict_with_data['months'].copy()
+
+    for i in dict_with_data['points']:
+        line = i[1].split('-')
+        position = '{}-{}'.format(line[0], line[1])
+        lst[position].append(i)
+    
+    # months = lst.keys() 
+    # for i in months:
+    #     pair = []
+    #     key = str(i)
+    #     pair = get_pair_of_coordinates(dict_with_data['months'][key])
+    #     pair = list(set(pair))
+
+    #     result = delaunay(pair)
+    #     dict_with_data['months'][key] = []
+    #     for triangles in result:
+    #         l = []
+    #         for index in range(3):
+    #             for value in dict_with_data['points']:
+    #                 if value[3] == triangles[index][0] and value[4] == triangles[index][1]:
+    #                     l.append(value)
+    #                     break
+    #         dict_with_data['months'][key].append(l)
+    
+    return jsonify(dict_with_data)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

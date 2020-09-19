@@ -17,12 +17,14 @@ def send(dirname):
             db.session.add(info)
             db.session.commit()
             successful += 1
-
-            # value = int(successful / length * 100)
-            # if value / 10 == 0:
-            #     tm = time.time_ns()
-            #     print(f'Completed: {value}%, time passed: {tm - last_time}')
+            # if successful / 10 == 0:
+            #     print(f'Successful inserted: time left: {time.time_ns() - last_time}, {successful // 10}')
+            print(successful)
+        else:
+            index += 1
+        if successful == 5000:
+            break
         
-    print(f'Inserting into database has been completed! Total: {length}, inserted: {successful}')
+    print(f'Inserting into database has been completed! Total: {length}, inserted: {successful}, failed: {index}, time left: {time.time_ns() - last_time}')
 
 send(os.getcwd() + '/data/files/')
