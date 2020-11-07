@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/deltax72/Project CO2/venv/bin/python2" "$0" "$@"
+'''exec' "/home/deltax72/Project CO2/venv/bin/python3.7" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

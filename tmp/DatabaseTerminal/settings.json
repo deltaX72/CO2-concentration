@@ -1,0 +1,14 @@
+{
+	"urls": [
+		"https://data2.gosat.nies.go.jp/data/wget_list/GU/SWIRL2CO2_GU_V02.91.zip",
+		"https://data2.gosat.nies.go.jp/data/wget_list/GU/SWIRL2CO2_GU_V02.90.zip",
+		"https://data2.gosat.nies.go.jp/data/wget_list/GU/SWIRL2CO2_GU_V02.81.zip",
+		"https://data2.gosat.nies.go.jp/data/wget_list/GU/SWIRL2CO2_GU_V02.80.zip",
+		"https://data2.gosat.nies.go.jp/data/wget_list/GU/SWIRL2CO2_GU_V02.72.zip"
+	],
+	"user": "lit.ilya29@gmail.com",
+	"password": "L57!EWCeSxh19cg_",
+	"directories": {
+		"archieves": "archieves"
+	}
+}

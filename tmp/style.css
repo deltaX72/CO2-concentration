@@ -23,38 +23,64 @@ body {
     background-attachment: scroll;
 }*/
 
+html, body {
+    margin: 0 0 0 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Divs */
 
 .configs {
     width: 35%;
-    height: 50%;
-    margin: 5% 5%;
-    border-radius: 5%;
+    height: 100%;
+    background-color: #c0c0c0; 
+    
+    position: relative;
+    /* color: #806e48; */
+    float: left;
+    opacity: 70%;
+}
+
+.map {
+    height: 100%;
+    position: relative;
+
+    /* margin-left: 35%; */
 
     background-color: #c0c0c0;
-    color: #806e48;
+    /* color: #806e48; */
 }
 
-.config-header {
-    text-align: center;
-}
-
-/* Panel */
 .panel {
-    /* border-radius: 25%; */
+    height: 100%;
+    width: 50%;
+    margin-top: 10%;
 
     color: #806e48;
-    /* background-color: #c0c0c0; */
+    float: left;
 }
 
 .panel-data {
-    width: 50%;
+    width: 100%;
+}
+
+/* Labels */
+
+.config-header {
+    margin: 0 0 0 0;
+    text-align: center;
 }
 
 .panel-name {
     font-size: smaller;
+    width: 100%;
+    margin-bottom: 5%;
     
-    margin: 0 7%;
+    margin: 0% 7%;
 }
+
+/* Inputs */
 
 .panel-input {
     border-radius: 10%;
@@ -62,6 +88,16 @@ body {
     margin-left: 5%;
     width: 54%;
     height: 20%;
+    background-color: lightblue;
+    border-color: lightblue;
+    border-radius: 20%;
+    padding: 2%;
 
     text-align: 5%;
+}
+
+.michael-circle {
+    height: 20%;
+    width: 100px;
+    background-color: #ff0000;
 }

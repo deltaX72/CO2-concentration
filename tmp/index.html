@@ -4,28 +4,50 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
     </head>
     <body>
+        <!-- <div> -->
         <div class="configs">
             <h1 class="config-header">Settings</h1>
             <div class="panel">
                 <div class="panel-data">
-                    <label class="panel-name">Minimal latitude</label>
+                    <label class="panel-name">Minimal latitude</label><br>
                     <input type="text" class="panel-input" placeholder="0.0"><br>
                 </div>
                 <div class="panel-data">
-                    <label class="panel-name">Maximal latitude</label>
+                    <label class="panel-name">Maximal latitude</label><br>
                     <input type="text" class="panel-input" placeholder="0.0"><br>
                 </div>
                 <div class="panel-data">
-                    <label class="panel-name">Minimal longitude</label>
+                    <label class="panel-name">Minimal longitude</label><br>
                     <input type="text" class="panel-input" placeholder="0.0"><br>
                 </div>
                 <div class="panel-data">
-                    <label class="panel-name">Maximal longitude</label>
+                    <label class="panel-name">Maximal longitude</label><br>
                     <input type="text" class="panel-input" placeholder="0.0"><br>
                 </div>
             </div>
+            <div class="panel">
+                <div class="panel-data">
+                    <label class="panel-name">Zoom</label><br>
+                    <input type="text" class="panel-input" placeholder="0.0"><br>
+                </div>
+                <div class="panel-data">
+                    <label class="panel-name">Zoom</label><br>
+                    <input type="checkbox" class="panel-input"><br>
+                </div>
+            </div>
         </div>
+        <div class="map" id="mapid"></div>
+        <!-- </div> -->
+
+        <script src="map.js"></script>
     </body>
 </html>

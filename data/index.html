@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=\ initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+    </head>
+    <body onload="
+        document.getElementById('min_lat').value = '40'
+        document.getElementById('max_lat').value = '80'
+        document.getElementById('min_lon').value = '60'
+        document.getElementById('max_lon').value = '100'
+        document.getElementById('date_from').value = '2014-06-01'
+        document.getElementById('date_to').value = '2014-06-30'
+    ">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css') }}">
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
+        <title>The Map</title>
+        <h1 id="headMap">The map</h1>
+        <div id="mapID"></div>
+
+        <form action="" method="GET" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <label for={{ form.minimal_latitude.id }}   style="position: fixed; top: 12%; left: 6%;">   {{ form.minimal_latitude.label }}</label><br>
+            <label for={{ form.maximal_latitude.id }}   style="position: fixed; top: 12%; left: 27%;">  {{ form.maximal_latitude.label }}</label><br>
+            <label for={{ form.minimal_longitude.id }}  style="position: fixed; top: 25%; left: 6%;">   {{ form.minimal_longitude.label }}</label><br>
+            <label for={{ form.maximal_longitude.id }}  style="position: fixed; top: 25%; left: 27%;">  {{ form.maximal_longitude.label }}</label><br>
+            <label for={{ form.date_from.id }}  style="position: fixed; top: 38%; left: 6%;">  {{ form.date_from.label }}</label><br>
+            <label for={{ form.date_to.id }}  style="position: fixed; top: 38%; left: 27%;">  {{ form.date_to.label }}</label><br>
+
+            <input type="text" id={{ form.minimal_latitude.id }}    style="position: fixed; top: 15%; left: 4%;" placeholder="0.0">
+            <input type="text" id={{ form.maximal_latitude.id }}    style="position: fixed; top: 15%; left: 25%;" placeholder="0.0">
+            <input type="text" id={{ form.minimal_longitude.id }}   style="position: fixed; top: 28%; left: 4%;" placeholder="0.0">
+            <input type="text" id={{ form.maximal_longitude.id }}   style="position: fixed; top: 28%; left: 25%;" placeholder="0.0">
+            <input type="date" id={{ form.date_from.id }}   style="position: fixed; top: 42%; left: 4%; size: 10%;">
+            <input type="date" id={{ form.date_to.id }}   style="position: fixed; top: 42%; left: 25%;">
+
+            <button type="submit" class="button" name='button' id={{ form.send_data.id }} style="position: fixed; top: 55%; left: 19%;"> {{ form.send_data.label }}</button>
+        </form>
+
+        <!-- <button type="button" class="button">Easter Egg is here!</button> -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/Leaflet.idw-master/src/leaflet-idw.js') }}"></script>
+        <!-- <script src="{{ url_for('static', filename='js/Leaflet.heat-gh-pages/dist/leaflet-heat.js') }}"></script> -->
+        <script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}">
+            // const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+            
+        </script>
+    </body>
+</html>

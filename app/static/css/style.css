@@ -1,0 +1,106 @@
+/* Greetings
+.greetings {
+    color: rgb(228, 104, 22);
+    /* size: 10;
+    background-color: rgb(177, 69, 69);
+}
+
+.greetings_header {
+    color: #f4a064;
+}
+
+/* Buttons
+.button {
+    color: cyan;
+    border: 2px solid violet;
+}
+
+/* Body
+body {
+    background-image: url("image0008.jpg");
+    background-repeat: repeat-y;    
+    background-position: right top;
+    background-attachment: scroll;
+}*/
+
+html, body {
+    margin: 0 0 0 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Divs */
+
+.configs {
+    width: 35%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    
+    position: fixed;
+    z-index: 1;
+    /* color: #806e48; */
+    float: left;
+    opacity: 70%;
+}
+
+.map {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+
+    /* margin-left: 35%; */
+
+    background-color: #c0c0c0;
+    padding: 100px;
+    /* color: #806e48; */
+}
+
+.panel {
+    height: 100%;
+    width: 50%;
+    margin-top: 10%;
+
+    color: #806e48;
+    float: left;
+    box-sizing: border-box;
+}
+
+.panel-data {
+    width: 100%;
+}
+
+/* Labels */
+
+.config-header {
+    margin: 0 0 0 0;
+    text-align: center;
+}
+
+.panel-name {
+    font-size: smaller;
+    width: 100%;
+    margin-bottom: 5%;
+    
+    margin: 0% 7%;
+}
+
+/* Inputs */
+
+.panel-input {
+    margin-bottom: 10%;
+    margin-left: 5%;
+    width: 54%;
+    height: 20%;
+    background-color: lightblue;
+    border-color: lightblue;
+    border-radius: 20%;
+    padding: 2%;
+
+    text-align: 5%;
+}
+
+.michael-circle {
+    height: 20%;
+    width: 100px;
+    background-color: #ff0000;
+}
