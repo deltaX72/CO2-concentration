@@ -2,3 +2,9 @@
 
 *.pyc
 __pycache__
+
+/DatabaseTerminal/archieves/*
+/DatabaseTerminal/buffer/*
+/DatabaseTerminal/file_buffer/*
+/DatabaseTerminal/wget-log*
+/tmp
