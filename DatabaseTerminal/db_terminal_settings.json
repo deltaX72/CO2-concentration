@@ -1,0 +1,14 @@
+{
+	"user": "lit.ilya29@gmail.com",
+	"password": "L57!EWCeSxh19cg_",
+	"directories": {
+		"archieves": "archieves",
+		"buffer": "buffer",
+		"json": "file_buffer"
+	},
+	"version": [
+		"V02.75",
+		"V02.95",
+		"V02.96"
+	]
+}

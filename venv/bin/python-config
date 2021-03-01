@@ -1,4 +1,4 @@
-#!/home/deltax72/Project CO2/venv/bin/python
+#!/home/deltax72/Desktop/Development/CO2-concentration/venv/bin/python
 
 import sys
 import getopt

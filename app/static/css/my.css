@@ -1,0 +1,215 @@
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+
+body{
+	height: 100%;
+	overflow: hidden;
+	font-size: 32px;
+	/*font-style: italic;*/
+	font-family: 'Alegreya Sans SC', sans-serif;
+}
+.settings{
+	background: rgba(0, 0, 0, 0.75);
+	width: 27%;
+	height: 100%;
+	position: fixed;
+}
+p{
+	float: left;
+	width: 50%;
+	margin-top: 4%;
+	text-align: center;
+	box-sizing: border-box;
+	color: rgb(46, 190, 187);
+}
+.defis{
+	width: 10%;
+}
+input{
+	float: left;
+	margin-top: 4%;
+	width: 15%;
+	height: 5%;
+	border: 0;
+	background: rgba(0, 0, 0, .15);
+	border-bottom: solid rgb(46, 190, 187);
+	box-sizing: border-box;
+}
+.left{
+	margin-left: 4%;
+}
+.left-right{
+	margin-left: 12%;
+}
+.alignCenter{
+	width: 100%;
+}
+.map {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+
+    background-color: #c0c0c0;
+    padding: 100px;
+}
+input[type="date"] {
+	font-size: 26px;
+}
+#date_from, #date_to{
+	width: 40%;
+	box-sizing: border-box;
+}
+#date_from{
+	margin-left: 4%;
+}
+#current_date {
+	float: left;
+	width: 92%;
+	margin-left: 4%;
+	box-sizing: border-box;
+}
+::-webkit-datetime-edit-fields-wrapper {
+	color: rgb(46, 190, 187);
+}
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { display: none; }
+button{
+	float: left;
+	border: 0;
+
+	/*margin-top: 4%; */
+	margin-left: 25%;
+	background: rgba(0, 0, 0, 0);
+	color: rgb(46, 190, 187);
+	border-bottom: solid rgb(46, 190, 187);
+	box-sizing: border-box;
+}
+.half{
+	float: left;
+	margin-left: 7%;
+	margin-top: 0;
+	padding: 0; 
+	border: 0;
+	font-size: 42px;
+	box-sizing: border-box;
+}
+.month{
+	float: left;
+	margin-top: 3%;
+	margin-left: 3%;
+	margin-right: -7%;
+	box-sizing: border-box;
+}
+.cancellation{
+	float: left;
+	margin-top: 4%;
+	margin-left: 2%;
+	color: rgb(46, 190, 187);
+	box-sizing: border-box;
+}
+input[type="checkbox"] {
+	float: left;
+	margin: 0;
+	margin-top: 5%;
+	margin-left: 3%;
+	/*opacity: 30%;*/
+	box-sizing: border-box;
+}
+select{
+	float: left;
+	margin-top: 10%;
+	border: 0;
+	border-bottom: solid rgb(46, 190, 187);
+	background: rgba(0, 0, 0, .15);
+	color: rgb(46, 190, 187);
+	box-sizing: border-box;
+}
+.items
+{
+  display: block;
+  min-height: 30px;
+  position: absolute;
+  border: 2px solid #ddd;
+  overflow: hidden;
+  width: 160px;
+  cursor: pointer;
+}

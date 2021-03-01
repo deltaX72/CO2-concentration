@@ -73,25 +73,25 @@ def run():
 # for i in read_data(lst[0]):
 #     print(i)
 
-# def read_files(path_to_h5_files):
-#     data = []
-#     for f in os.listdir(path_to_h5_files):
-#         dataset = h5py.File(path_to_h5_files + f, 'r')
-#         # [print(item) for item in dataset.items()]
-#         # print(dataset['Data']['mixingRatio']['XCO2'])
+def read_files(path_to_h5_files):
+    data = []
+    for f in os.listdir(path_to_h5_files):
+        dataset = h5py.File(path_to_h5_files + f, 'r')
+        # [print(item) for item in dataset.items()]
+        # print(dataset['Data']['mixingRatio']['XCO2'])
 
-#         # ===========================================================
+        # ===========================================================
         
-#         for k, v in dataset.items():
-#             print(f'{k}\n{v}')
-#             for key, val in dataset[k].items():
-#                 print(f'\t{key}\n\t{val}')
-#                 for key2, val2 in dataset[k][key].items():
-#                     print(f'\t\t{key2}\n\t\t{val2}')
+        for k, v in dataset.items():
+            print(f'{k}\n{v}')
+            for key, val in dataset[k].items():
+                print(f'\t{key}\n\t{val}')
+                for key2, val2 in dataset[k][key].items():
+                    print(f'\t\t{key2}\n\t\t{val2}')
 
-#         print()
-#         dataset.close()
-#         break
+        print()
+        dataset.close()
+        break
 
 # read_files(os.getcwd() + '/SWIRL2CO2/')
 

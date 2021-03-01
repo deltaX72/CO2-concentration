@@ -4,7 +4,7 @@ import datetime
 
 class Info(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(10), index=True, nullable=False)
+    date = db.Column(db.Date, index=True, nullable=False)
     time = db.Column(db.String(15), index=True, nullable=False)
     lat = db.Column(db.Float, index=True, nullable=False)
     lon = db.Column(db.Float, index=True, nullable=False)

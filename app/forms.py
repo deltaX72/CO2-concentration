@@ -10,12 +10,6 @@ class InputDataForm(FlaskForm):
     maximal_longitude = StringField('Maximal longitude', validators=[DataRequired()], id='max_lon')
     date_from = DateTimeField(validators=[Required()], id='date_from')
     date_to = DateTimeField(validators=[Required()], id='date_to')
-    send_data = SubmitField('Send', id='send_id')
-
-
-
-
-
-
-
-    
+    current_date = DateTimeField(validators=[Required()], id='current_date')
+    send_data = SubmitField('Применить', id='send_id')
+    quality = StringField('Quality', validators=[DataRequired()], id='quality')

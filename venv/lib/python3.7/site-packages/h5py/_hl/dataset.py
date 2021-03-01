@@ -11,7 +11,10 @@
     Implements support for high-level dataset access.
 """
 
-from cached_property import cached_property
+try:
+    from functools import cached_property
+except ImportError:
+    from cached_property import cached_property
 import posixpath as pp
 import sys
 
@@ -858,7 +861,7 @@ class Dataset(HLObject):
         else:
             # If the input data is already an array, let HDF5 do the conversion.
             # If it's a list or similar, don't make numpy guess a dtype for it.
-            dt = None if isinstance(val, numpy.ndarray) else self.dtype
+            dt = None if isinstance(val, numpy.ndarray) else self.dtype.base
             val = numpy.asarray(val, order='C', dtype=dt)
 
         # Check for array dtype compatibility and convert
